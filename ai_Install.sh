@@ -113,9 +113,9 @@ read -p "Enter the option number: " choice
 # Choose action based on user input
 case "$choice" in
 1)
+    # Automatic1111
     pre_launch
     clear
-    # Automatic1111
     check_directory "$STABLE_DIFFUSION_WEBUI"
     cd $HOME
     git clone --recurse-submodules -j8 https://github.com/AUTOMATIC1111/stable-diffusion-webui.git "$STABLE_DIFFUSION_WEBUI"
@@ -160,9 +160,9 @@ case "$choice" in
     echo "you can launch Automatic1111 with launch_auto.sh"
     ;;
 2)
+    # ComfyUI
     pre_launch
     clear
-    # ComfyUI
     check_directory "$COMFYUI"
     cd $HOME
     git clone --recurse-submodules -j8 https://github.com/comfyanonymous/ComfyUI.git "$COMFYUI"
@@ -237,9 +237,9 @@ case "$choice" in
     echo "you can launch ComfyUI with launch_comfyui.sh"
     ;;
 3)
+    #Ollama
     pre_launch
     clear
-    #Ollama
     cd $HOME
     latest_release=$(curl -sSL https://api.github.com/repos/ollama/ollama/releases/latest | grep '"tag_name"' | cut -d '"' -f 4)
     version=${latest_release}
@@ -256,9 +256,9 @@ case "$choice" in
     echo "you can launch Ollama with ./$destination_file serve"
     ;;
 4)
+    # oobabooga
     pre_launch
     clear
-    # oobabooga
     check_directory "$OOBABOOGA"
     cd $HOME
     PYTHON_VER="python=3.11"
