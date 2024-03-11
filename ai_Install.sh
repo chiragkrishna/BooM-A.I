@@ -39,9 +39,15 @@ echo "performing pre-checks"
 if [[ "$(pwd)" =~ " " ]]; then echo This script can not be installed under a path with spaces. && exit; fi
 
 # check if running as root
-if [[ $(id -u) -eq 0 && can_run_as_root -eq 0 ]]
-then
-    echo "ERROR: This script must not be launched as root, aborting..."
+can_run_as_root=0
+while getopts "f" flag; do
+    case ${flag} in
+        f) can_run_as_root=1;;
+        *) break;;
+    esac
+done
+if [[ $EUID -eq 0 || $can_run_as_root -eq 1 ]]; then
+    echo "ERROR: This script must not be launched as root or with sudo, aborting..."
     exit 1
 else
     echo "Running on $(whoami) user"
