@@ -58,7 +58,7 @@ case "$choice" in
     center_text "${delimiter}"
     # start webui
     echo "Starting WebUI"
-    python launch.py $@ --attention-split
+    python launch.py $@
     ;;
 2)
     clear
@@ -105,7 +105,7 @@ case "$choice" in
     pip install --upgrade -r requirements.txt
     # start webui
     echo "Starting WebUI"
-    python launch.py $@ --attention-split
+    python launch.py $@
     ;;
 *)
     echo "Invalid option: $choice"

@@ -56,7 +56,7 @@ case "$choice" in
     center_text "${delimiter}"
     # start webui
     echo "Starting WebUI"
-    python launch.py $@ --medvram --opt-sdp-attention --opt-split-attention
+    python launch.py $@
     ;;
 2)
     clear
@@ -103,7 +103,7 @@ case "$choice" in
     pip install --upgrade -r requirements.txt
     # start webui
     echo "Starting WebUI"
-    python launch.py $@ --medvram --opt-sdp-attention --opt-split-attention
+    python launch.py $@
     ;;
 *)
     echo "Invalid option: $choice"
