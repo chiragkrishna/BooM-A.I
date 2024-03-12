@@ -1,6 +1,10 @@
 # BooM-A.I
 
-# Script details
+Script will install them in HOME folder
+# how to
+```
+git clone this repo and run ai_install.sh
+```
 
 This script can auto install the following along with custom extentions/nodes.
 - [Automatic1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
@@ -19,8 +23,13 @@ This script can auto install the following along with custom extentions/nodes.
     - [efficiency-nodes-comfyui](https://github.com/jags111/efficiency-nodes-comfyui)
     - [SeargeSDXL](https://github.com/SeargeDP/SeargeSDXL)
     - [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts)
+    - [image-resize-comfyui](https://github.com/palant/image-resize-comfyui)
+    - [ComfyUI-PhotoMaker-Plus](https://github.com/shiimizu/ComfyUI-PhotoMaker-Plus)
 - [Ollama](https://github.com/ollama/ollama)
 - [Oobabooga](https://github.com/oobabooga/text-generation-webui)
+- [Forge](https://github.com/lllyasviel/stable-diffusion-webui-forge)
+    - [sd-forge-animatediff](https://github.com/continue-revolution/sd-forge-animatediff)
+- [TaskWeaver](https://github.com/microsoft/TaskWeaver)
 
 # pre requisite
 
