@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-script_dir="$(dirname "$0")"
+script_dir="$(dirname "$(readlink -f "$0")")"
 LOG_FILE="$(pwd)/install_logs.txt"
 if [ ! -e "$LOG_FILE" ]; then
     touch "$LOG_FILE"
