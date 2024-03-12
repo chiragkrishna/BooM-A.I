@@ -1,9 +1,9 @@
 #!/bin/bash
 clear
 ROCM="rocm6.0.2"
-COMFYUI="/home/$(whoami)/ComfyUI"
+FORGE="/home/$(whoami)/stable-diffusion-webui-forge"
 GFX="gfx1030"
-TORCH="pip install --upgrade --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/rocm6.0"
+ROCM_URL="https://repo.radeon.com/rocm/manylinux/rocm-rel-6.0.2"
 
 # Function to calculate the center position
 center_text() {
@@ -16,12 +16,13 @@ center_text() {
 # Display menu
 delimiter="################################################################"
 center_text "${delimiter}"
-center_text "___ ___  __  __ _____   ___   _ ___ "
-center_text "/ __/ _ \|  \/  | __\ \ / / | | |_ _|"
-center_text "| (_| (_) | |\/| | _| \ V /| |_| || | "
-center_text "\___\___/|_|  |_|_|   |_|  \___/|___|"
+center_text "___________________ __________  ___________________"
+center_text "\_   _____/\_____  \\______   \/  _____/\_   _____/"
+center_text " |    __)   /   |   \|       _/   \  ___ |    __)_ "
+center_text " |     \   /    |    \    |   \    \_\  \|        \ "
+center_text " \___  /   \_______  /____|_  /\______  /_______  /"
+center_text "     \/            \/       \/        \/        \/ "
 center_text "${delimiter}"
-# Display menu
 echo "-----------------"
 echo "Choose an option:"
 echo "-----------------"
@@ -43,13 +44,13 @@ fi
 case "$choice" in
 1)
     clear
-    # activate conda
+    # conda activate
     eval "$(conda shell.zsh hook)"
-    conda activate comfy
+    conda activate forge
     center_text "${delimiter}"
     center_text "Activated conda virtual environment: $CONDA_DEFAULT_ENV"
-    # activate python venv
-    source $COMFYUI/$ROCM/bin/activate
+    # activating python venv
+    source $FORGE/$ROCM/bin/activate
     venv_name123=$(basename "$VIRTUAL_ENV")
     center_text "Activated python virtual environment: $venv_name123"
     pyth=$(python --version)
@@ -57,15 +58,15 @@ case "$choice" in
     center_text "${delimiter}"
     # start webui
     echo "Starting WebUI"
-    python main.py $@ --auto-launch --use-split-cross-attention
+    python launch.py $@ --attention-split
     ;;
 2)
     clear
     # update
-    echo "updating ComfyUI"
+    echo "updating Forge"
     git pull
     # Updating git repos
-    folder_path="$COMFYUI/custom_nodes"
+    folder_path="$(pwd)/extensions"
     # Loop through each subfolder in the specified folder
     for repo in "$folder_path"/*; do
         if [ -d "$repo" ]; then
@@ -81,13 +82,13 @@ case "$choice" in
             fi
         fi
     done
-    # activate conda
+    # conda activate
     eval "$(conda shell.zsh hook)"
-    conda activate comfy
+    conda activate forge
     center_text "${delimiter}"
     center_text "Activated conda virtual environment: $CONDA_DEFAULT_ENV"
-    # activate python venv
-    source $COMFYUI/$ROCM/bin/activate
+    # activating python venv
+    source $FORGE/$ROCM/bin/activate
     venv_name123=$(basename "$VIRTUAL_ENV")
     center_text "Activated python virtual environment: $venv_name123"
     pyth=$(python --version)
@@ -104,7 +105,7 @@ case "$choice" in
     pip install --upgrade -r requirements.txt
     # start webui
     echo "Starting WebUI"
-    python main.py $@ --auto-launch --use-split-cross-attention
+    python launch.py $@ --attention-split
     ;;
 *)
     echo "Invalid option: $choice"
