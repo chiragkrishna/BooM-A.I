@@ -81,14 +81,14 @@ pre_launch() {
     latest_kdb=$(wget -qO- ${url_kdb} | grep -oP 'miopen.*?deb' | tail -n 1)
     miopen_url="https://repo.radeon.com/rocm/apt/6.0.2/pool/main/m/miopen-hip-gfx1030kdb/$latest_kdb"
     kdb_folder="${latest_kdb%.deb}"
-    if [ -d "$HOME/AI/$kdb_folder" ]; then
-        MIOPEN_KDB="$HOME/AI/$kdb_folder/opt/rocm-6.0.2/share/miopen/db/gfx1030.kdb"
+    if [ -d "$(pwd)/$kdb_folder" ]; then
+        MIOPEN_KDB="$(pwd)/$kdb_folder/opt/rocm-6.0.2/share/miopen/db/gfx1030.kdb"
         KDB_MOVE="$ROCM/lib/$PYTHON/site-packages/torch/share/miopen/db/gfx1030.kdb"
     else
         wget "$miopen_url"
         rm -rf "$HOME"/AI/miopen*amd64
-        dpkg-deb -xv "$latest_kdb" "$HOME/AI/$kdb_folder"
-        MIOPEN_KDB="$HOME/AI/$kdb_folder/opt/rocm-6.0.2/share/miopen/db/gfx1030.kdb"
+        dpkg-deb -xv "$latest_kdb" "$(pwd)/$kdb_folder"
+        MIOPEN_KDB="$(pwd)/$kdb_folder/opt/rocm-6.0.2/share/miopen/db/gfx1030.kdb"
         KDB_MOVE="$ROCM/lib/$PYTHON/site-packages/torch/share/miopen/db/gfx1030.kdb"
         rm -rf "$latest_kdb"
     fi
@@ -132,7 +132,7 @@ instal_automatic1111() {
     cd "$STABLE_DIFFUSION_WEBUI/extensions/sd-webui-controlnet" || return
     pip install -r requirements.txt
     create_symbolic_link "$MIOPEN_KDB" "$STABLE_DIFFUSION_WEBUI/$KDB_MOVE"
-    cp -rf "$HOME/AI/launch_auto.sh" "$STABLE_DIFFUSION_WEBUI/launch_auto.sh"
+    cp -rf "$(pwd)/launch_auto.sh" "$STABLE_DIFFUSION_WEBUI/launch_auto.sh"
     chmod +x "$STABLE_DIFFUSION_WEBUI/launch_auto.sh"
     echo "successfully installed Automatic1111"
     echo "you can launch Automatic1111 with launch_auto.sh"
@@ -171,7 +171,7 @@ install_forge(){
     #sd-forge-animatediff extension
     git clone --recursive https://github.com/continue-revolution/sd-forge-animatediff.git "$FORGE/extensions/sd-forge-animatediff"
     create_symbolic_link "$MIOPEN_KDB" "$FORGE/$KDB_MOVE"
-    cp -rf "$HOME/AI/launch_forge.sh" "$FORGE/launch_forge.sh"
+    cp -rf "$(pwd)/launch_forge.sh" "$FORGE/launch_forge.sh"
     chmod +x "$FORGE/launch_forge.sh"
     echo "successfully installed Forge"
     echo "you can launch Forge with launch_forge.sh"
@@ -250,7 +250,7 @@ install_comfyui() {
     #ComfyUI-PhotoMaker-Plus node
     git clone --recursive https://github.com/shiimizu/ComfyUI-PhotoMaker-Plus.git "$COMFYUI/custom_nodes/ComfyUI-PhotoMaker-Plus"
     create_symbolic_link "$MIOPEN_KDB" "$COMFYUI/$KDB_MOVE"
-    cp -rf "$HOME/AI/launch_comfyui.sh" "$COMFYUI/launch_comfyui.sh"
+    cp -rf "$(pwd)/launch_comfyui.sh" "$COMFYUI/launch_comfyui.sh"
     chmod +x "$COMFYUI/launch_comfyui.sh"
     echo "successfully installed ComfyUI"
     echo "you can launch ComfyUI with launch_comfyui.sh"
@@ -285,7 +285,7 @@ install_taskweaver() {
     pip install --upgrade pip wheel
     pip install -r requirements.txt
     pip install chainlit==1.0.100
-    cp -rf "$HOME/AI/launch_taskweaver.sh" "/$TASKWEAVER/launch_taskweaver.sh"
+    cp -rf "$(pwd)/launch_taskweaver.sh" "/$TASKWEAVER/launch_taskweaver.sh"
     chmod +x "$TASKWEAVER/launch_taskweaver.sh"
     echo "successfully installed TaskWeaver"
     echo "you can launch TaskWeaver with launch_taskweaver.sh"
@@ -383,7 +383,7 @@ install_oobabooga(){
     ROCM_VERSION=6.0 ROCM_HOME=/opt/rocm ROCM_TARGET="$GFX" PYTORCH_ROCM_ARCH="$GFX" MAX_JOBS=6 pip install --no-cache-dir .
     cd "$OOBABOOGA" || return
     create_symbolic_link "$MIOPEN_KDB" "$OOBABOOGA/$KDB_MOVE"
-    cp -rf "$HOME/AI/launch_oobabooga.sh" "/$OOBABOOGA/launch_oobabooga.sh"
+    cp -rf "$(pwd)/launch_oobabooga.sh" "/$OOBABOOGA/launch_oobabooga.sh"
     chmod +x "$OOBABOOGA/launch_oobabooga.sh"
     echo "successfully installed oobabooga"
     echo "you can launch oobabooga with launch_oobabooga.sh"
