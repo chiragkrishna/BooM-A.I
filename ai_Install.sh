@@ -1,5 +1,6 @@
 #!/bin/bash
 clear
+script_dir="$(dirname "$0")"
 LOG_FILE="$(pwd)/install_logs.txt"
 if [ ! -e "$LOG_FILE" ]; then
     touch "$LOG_FILE"
@@ -132,6 +133,7 @@ instal_automatic1111() {
     cd "$STABLE_DIFFUSION_WEBUI/extensions/sd-webui-controlnet" || return
     pip install -r requirements.txt
     create_symbolic_link "$MIOPEN_KDB" "$STABLE_DIFFUSION_WEBUI/$KDB_MOVE"
+    cd "$script_dir"
     cp -rf "$(pwd)/launch_auto.sh" "$STABLE_DIFFUSION_WEBUI/launch_auto.sh"
     chmod +x "$STABLE_DIFFUSION_WEBUI/launch_auto.sh"
     echo "successfully installed Automatic1111"
@@ -171,6 +173,7 @@ install_forge(){
     #sd-forge-animatediff extension
     git clone --recursive https://github.com/continue-revolution/sd-forge-animatediff.git "$FORGE/extensions/sd-forge-animatediff"
     create_symbolic_link "$MIOPEN_KDB" "$FORGE/$KDB_MOVE"
+    cd "$script_dir"
     cp -rf "$(pwd)/launch_forge.sh" "$FORGE/launch_forge.sh"
     chmod +x "$FORGE/launch_forge.sh"
     echo "successfully installed Forge"
@@ -250,6 +253,7 @@ install_comfyui() {
     #ComfyUI-PhotoMaker-Plus node
     git clone --recursive https://github.com/shiimizu/ComfyUI-PhotoMaker-Plus.git "$COMFYUI/custom_nodes/ComfyUI-PhotoMaker-Plus"
     create_symbolic_link "$MIOPEN_KDB" "$COMFYUI/$KDB_MOVE"
+    cd "$script_dir"
     cp -rf "$(pwd)/launch_comfyui.sh" "$COMFYUI/launch_comfyui.sh"
     chmod +x "$COMFYUI/launch_comfyui.sh"
     echo "successfully installed ComfyUI"
@@ -285,6 +289,7 @@ install_taskweaver() {
     pip install --upgrade pip wheel
     pip install -r requirements.txt
     pip install chainlit==1.0.100
+    cd "$script_dir"
     cp -rf "$(pwd)/launch_taskweaver.sh" "/$TASKWEAVER/launch_taskweaver.sh"
     chmod +x "$TASKWEAVER/launch_taskweaver.sh"
     echo "successfully installed TaskWeaver"
@@ -383,6 +388,7 @@ install_oobabooga(){
     ROCM_VERSION=6.0 ROCM_HOME=/opt/rocm ROCM_TARGET="$GFX" PYTORCH_ROCM_ARCH="$GFX" MAX_JOBS=6 pip install --no-cache-dir .
     cd "$OOBABOOGA" || return
     create_symbolic_link "$MIOPEN_KDB" "$OOBABOOGA/$KDB_MOVE"
+    cd "$script_dir"
     cp -rf "$(pwd)/launch_oobabooga.sh" "/$OOBABOOGA/launch_oobabooga.sh"
     chmod +x "$OOBABOOGA/launch_oobabooga.sh"
     echo "successfully installed oobabooga"
