@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-LOG_FILE="/home/$(whoami)/AI/install_logs.txt"
+LOG_FILE="$(pwd)/install_logs.txt"
 if [ ! -e "$LOG_FILE" ]; then
     touch "$LOG_FILE"
 fi
@@ -86,7 +86,7 @@ pre_launch() {
         KDB_MOVE="$ROCM/lib/$PYTHON/site-packages/torch/share/miopen/db/gfx1030.kdb"
     else
         wget "$miopen_url"
-        rm -rf "$HOME"/AI/miopen*amd64
+        rm -rf miopen*amd64
         dpkg-deb -xv "$latest_kdb" "$(pwd)/$kdb_folder"
         MIOPEN_KDB="$(pwd)/$kdb_folder/opt/rocm-6.0.2/share/miopen/db/gfx1030.kdb"
         KDB_MOVE="$ROCM/lib/$PYTHON/site-packages/torch/share/miopen/db/gfx1030.kdb"
