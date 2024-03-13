@@ -101,6 +101,29 @@ case "$choice" in
     latest_onnx_wheel=$(wget -qO- ${ONNX_URL} | grep -oP 'onnxruntime.*?cp310-cp310-manylinux_2_28_x86_64.whl' | tail -n 1)
     onnxruntime_rocm="pip install --upgrade --pre https://download.onnxruntime.ai/$latest_onnx_wheel"
     eval "$onnxruntime_rocm"
+    #comfyui-reactor-node custom nodes
+    cd "$COMFYUI/custom_nodes/comfyui-reactor-node" || return
+    pip install --upgrade -r requirements.txt
+    #ComfyUI-Advanced-ControlNet custom node
+    cd "$COMFYUI/custom_nodes/ComfyUI-Advanced-ControlNet" || return
+    pip install --upgrade -r requirements.txt
+    #comfyui_controlnet_aux custom node
+    cd "$COMFYUI/custom_nodes/comfyui_controlnet_aux" || return
+    pip install --upgrade -r requirements.txt
+    #ComfyUI_FizzNodes custom node
+    cd "$COMFYUI/custom_nodes/ComfyUI_FizzNodes" || return
+    pip install --upgrade -r requirements.txt
+    #ComfyUI-Manager custom node
+    cd "$COMFYUI/custom_nodes/ComfyUI-Manager" || return
+    pip install --upgrade -r requirements.txt
+    #ComfyUI-VideoHelperSuite custom node
+    git clone --recursive https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git "$COMFYUI/custom_nodes/ComfyUI-VideoHelperSuite"
+    cd "$COMFYUI/custom_nodes/ComfyUI-VideoHelperSuite" || return
+    pip install --upgrade -r requirements.txt
+    #efficiency-nodes-comfyui custom node
+    cd "$COMFYUI/custom_nodes/efficiency-nodes-comfyui" || return
+    pip install --upgrade -r requirements.txt
+    cd $COMFYUI || return
     pip install --upgrade -r requirements.txt
     # start webui
     echo "Starting WebUI"
