@@ -100,6 +100,10 @@ case "$choice" in
     latest_onnx_wheel=$(wget -qO- ${ONNX_URL} | grep -oP 'onnxruntime.*?cp310-cp310-manylinux_2_28_x86_64.whl' | tail -n 1)
     onnxruntime_rocm="pip install --upgrade --pre https://download.onnxruntime.ai/$latest_onnx_wheel"
     eval "$onnxruntime_rocm"
+    #sd-webui-controlnet extension
+    cd "$STABLE_DIFFUSION_WEBUI/extensions/sd-webui-controlnet" || return
+    pip install --upgrade -r requirements.txt
+    cd "$STABLE_DIFFUSION_WEBUI" || return
     pip install --upgrade -r requirements.txt
     # start webui
     echo "Starting WebUI"
