@@ -1,10 +1,6 @@
 #!/bin/bash
 clear
 script_dir="$(dirname "$(readlink -f "$0")")"
-LOG_FILE="$(pwd)/install_logs.txt"
-if [ ! -e "$LOG_FILE" ]; then
-    touch "$LOG_FILE"
-fi
 
 # Function to calculate the center position
 center_text() {
@@ -449,4 +445,4 @@ main() {
 }
 
 # Execute the main function
-main | tee -a "$LOG_FILE"
+main
