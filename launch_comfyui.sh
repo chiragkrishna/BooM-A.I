@@ -123,7 +123,7 @@ case "$choice" in
     #efficiency-nodes-comfyui custom node
     cd "$COMFYUI/custom_nodes/efficiency-nodes-comfyui" || return
     pip install --upgrade -r requirements.txt
-    cd $COMFYUI || return
+    cd "$COMFYUI" || return
     pip install --upgrade -r requirements.txt
     # start webui
     echo "Starting WebUI"
