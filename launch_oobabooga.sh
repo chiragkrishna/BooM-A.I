@@ -118,7 +118,8 @@ case "$choice" in
     python setup.py clean
     ROCM_VERSION=6.0 PYTORCH_ROCM_ARCH="$GFX" MAX_JOBS=6 pip install --upgrade --no-cache-dir .
     # llama-cpp update
-    CC='/opt/rocm/llvm/bin/clang' CXX='/opt/rocm/llvm/bin/clang++' CFLAGS='-fPIC' CXXFLAGS='-fPIC' CMAKE_PREFIX_PATH='/opt/rocm' ROCM_PATH="/opt/rocm" HIP_PATH="/opt/rocm" CMAKE_ARGS="-GNinja -DLLAMA_HIPBLAS=ON -DLLAMA_AVX2=on -DGPU_TARGETS="$GFX"" pip install --upgrade --force-reinstall --no-cache-dir llama-cpp-python
+    cd "$OOBABOOGA/repo/llama-cpp-python"
+    CC='/opt/rocm/llvm/bin/clang' CXX='/opt/rocm/llvm/bin/clang++' CFLAGS='-fPIC' CXXFLAGS='-fPIC' CMAKE_PREFIX_PATH='/opt/rocm' ROCM_PATH="/opt/rocm" HIP_PATH="/opt/rocm" CMAKE_ARGS="-GNinja -DLLAMA_HIPBLAS=ON -DLLAMA_AVX2=on -DGPU_TARGETS="$GFX"" pip install --upgrade --force-reinstall --no-cache-dir -e .[all]
     # bitsandbytes update
     cd "$OOBABOOGA/repo/bitsandbytes"
     git clean -fd
