@@ -368,7 +368,10 @@ install_oobabooga(){
     pip install -r requirements.txt
     ROCM_VERSION=6.0 PYTORCH_ROCM_ARCH="$GFX" MAX_JOBS=6 pip install --no-cache-dir .
     # llama-cpp
-    CC='/opt/rocm/llvm/bin/clang' CXX='/opt/rocm/llvm/bin/clang++' CFLAGS='-fPIC' CXXFLAGS='-fPIC' CMAKE_PREFIX_PATH='/opt/rocm' ROCM_PATH="/opt/rocm" HIP_PATH="/opt/rocm" CMAKE_ARGS="-GNinja -DLLAMA_HIPBLAS=ON -DLLAMA_AVX2=on -DGPU_TARGETS=$GFX" pip install --no-cache-dir llama-cpp-python
+    git clone --recurse https://github.com/abetlen/llama-cpp-python.git "$OOBABOOGA/repo/llama-cpp-python"
+    cd "$OOBABOOGA/repo/llama-cpp-python"
+    pip install --upgrade pip
+    CC='/opt/rocm/llvm/bin/clang' CXX='/opt/rocm/llvm/bin/clang++' CFLAGS='-fPIC' CXXFLAGS='-fPIC' CMAKE_PREFIX_PATH='/opt/rocm' ROCM_PATH="/opt/rocm" HIP_PATH="/opt/rocm" CMAKE_ARGS="-GNinja -DLLAMA_HIPBLAS=ON -DLLAMA_AVX2=on -DGPU_TARGETS=$GFX" pip install --no-cache-dir -e .[all]
     # bitsandbytes
     git clone --recursive --single-branch --branch rocm_enabled https://github.com/ROCm/bitsandbytes.git "$OOBABOOGA/repo/bitsandbytes"
     cd "$OOBABOOGA/repo/bitsandbytes" || return
