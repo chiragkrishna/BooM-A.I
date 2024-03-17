@@ -95,10 +95,6 @@ case "$choice" in
     center_text "${delimiter}"
     # Get latest torch
     eval "$TORCH"
-    cp requirements_amd.txt requirements_custom.txt
-    sed -i '/# llama-cpp-python (CPU only, AVX2)/,$d' "$OOBABOOGA/requirements_custom.txt"
-    pip install -r requirements_custom.txt
-    rm requirements_custom.txt
     # AutoGPTQ update
     cd "$OOBABOOGA/repo/AutoGPTQ"
     git clean -fd
@@ -131,6 +127,10 @@ case "$choice" in
     cd "$OOBABOOGA/repo/AutoAWQ"
     ROCM_VERSION=6.0 ROCM_HOME=/opt/rocm ROCM_TARGET="$GFX" PYTORCH_ROCM_ARCH="$GFX" MAX_JOBS=6 pip install --upgrade --no-cache-dir .
     cd $OOBABOOGA
+    cp requirements_amd.txt requirements_custom.txt
+    sed -i '/# llama-cpp-python (CPU only, AVX2)/,$d' "$OOBABOOGA/requirements_custom.txt"
+    pip install -r requirements_custom.txt
+    rm requirements_custom.txt
     # start webui
     echo "Starting WebUI"
     python server.py $@ --auto-launch
